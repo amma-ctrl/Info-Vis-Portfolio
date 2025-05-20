@@ -30,7 +30,7 @@
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<div class="inner">
 							<h1>FINAL PORTFOLIO</h1>
-							<p>Welcome to my information visualization portfolio! This collection showcases my growth as a designer and data storyteller, featuring projects that have been thoughtfully reworked based on user research and feedback. From exploring representation in the Smithsonian’s open access collections to diving deep into the Degrees & Disparities project, highlighting the gap between Black women’s graduate degree attainment and leadership roles, I’ve aimed to make complex issues both engaging and accessible. I wrap it all up with a self-assessment reflecting on what I’ve learned, how I’ve grown, and where I’m headed next.</p>
+							<p>Welcome to my information visualization portfolio! This collection showcases my growth as a designer and data storyteller, featuring projects that have been thoughtfully reworked based on user feedback. From exploring Smithsonian’s open access collections to diving deep into the Degrees & Disparities project, highlighting the gap between Black women’s graduate degree attainment and leadership roles, I’ve aimed to make complex data both engaging and accessible. I wrap it all up with a self-assessment reflecting on what I’ve learned, how I’ve grown.</p>
 						</div>
 					</section>
 
@@ -39,31 +39,76 @@
                         <section id="main" class="wrapper">
 						  <div class="inner">
                               <h1 class="major" align="right">PIECES IN PLACE</br><em>Mapping Smithsonian Access</em></h1>
-							 
-                            <h2>Introduction</h2>
-                            <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
+							 <h2>Introduction</h2>
+                            <p>Growing up in DC, the Smithsonian museums were a kind of constant. They were free, they were everywhere, and they made art, science, and history feel easily accessible. As I got older and started working with data, I stumbled upon the <strong><a href="https://www.si.edu/openaccess">Smithsoninan Institution Open Access</a></strong> collection. It was so vast, and I found myself wondering: if the Smithsonian has over 5 million open-access pieces online, where do those pieces actually live? And more importantly, how could that scale of information be made visible or even navigable?</p>
                             
-                            <h2>Dashboard Design</h2>
-                            <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
+                            <p>That question kicked off a multi-stage process of designing maps that reconnect digital data with physical place. I started with Tableau and recently expanded into ArcGIS, each stage responding to user feedback and design lessons to get closer to something truly usable: a dashboard that not only visualizes where Smithsonian collections are held, but also lets people explore the collections at each location.</p>
                             
-                            <h2>Dashboard</h2>
+                            <h2>The Data Journey</h2>
+    <p>I began by pulling records from the Smithsonian Open Access API, aiming for a million, but hitting a ceiling around 600,000 records. The API doesn’t make things easy. Fields are deeply nested, and metadata like race, gender, or even consistent object types aren’t standardized. I had to write custom logic to extract or infer things like collection themes and time periods.</p>
+    <p>Even trickier: there was no geospatial data included. So I built that from scratch, collecting addresses for every Smithsonian museum and using R to geocode them into spatial points, essentially hand-stitching a location dataset to the metadata.</p>
+  
+    <h2>Stage One: Tableau Experiments</h2>
+    <p>The first visualization stage lived in Tableau Public. I created a series of interactive maps that tried to answer basic questions:  
+    <ul>
+      <li>How many pieces are held at each institution?</li>
+      <li>What types of objects dominate each collection?</li>
+      <li>How do collections differ by time period?</li>
+    </ul>
+    </p>
+
+    <p>One of the more popular maps was the proportional symbol map showing total open-access items per institution. But others included pie charts to show temporal spread and filtered views for women-created works.</p>
+    <p>But as useful as that was, the Tableau version had limits. The filtering felt clunky, spatial navigation was limited, and the tool wasn't dynamic enough to handle deeper questions from users.</p>
+
+    <p><a href="https://public.tableau.com/views/PiecesinPlaceMappingSmithsonianAccess_17449160318030/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" target="_blank">🔗 View Tableau Dashboard</a></p>
+
+    <h2>Stage Two: Listening to Feedback</h2>
+    <p>The feedback was consistent:</p>
+    <ul>
+      <li>Curators and fellow spatial analysts wanted to filter collections by identity, object type, or era.</li>
+      <li>Teacher feedback was to see more detailed tooltips and equal representation of the institutions to be able to see each location's collection breakdowns.</li>
+      <li>Everyday users needed better wayfinding, like recognizing which museums are near each other or learning what kind of work they specialize in.</li>
+    </ul>
+
+    <p>That pushed me toward a second version—this time, using ArcGIS Dashboards to bring in better filtering, cleaner spatial controls, and more dynamic data views.</p>
+
+  <div class="section">
+    <h2>Stage Three: Building the ArcGIS Dashboard</h2>
+    <p>The new ArcGIS interactive dashboard is a direct response to everything I learned building the first round. Now, when a user clicks on any Smithsonian institution, the dashboard generates a location-specific breakdown with:</p>
+    <ul>
+      <li>A map that zooms to the museum’s location</li>
+      <li>A bar chart showing object types found there</li>
+      <li>A timeline that traces the creation dates of those items</li>
+      <li>A list view with titles, creators, and descriptions</li>
+    </ul>
+      
+<p>And if you want to just look within the map, when a user clicks on any Smithsonian institution, a popup of the institution address, type, information, outside image, and sample collection are generated.</p>
+      
+    <p>Behind the scenes, this required creating a related table structure so that each point on the map (each institution) pulls up only the objects tied to that location. It’s all connected: the point, the data, the visuals. The dashboard becomes not just a map, but a portal into the depth of each institution's holdings.</p>
+
+<h2>Dashboard</h2>
                             <div class="dashboard-container">
     <iframe src="https://prattsavi.maps.arcgis.com/apps/dashboards/db55b87da2da4d2da30c7716f927ce91" title="Smithsonian Interactive Dashboard"></iframe>
   </div>
                             <p>I am uncertain why the dashboard is not displaying correctly, so please click the link below to see the full dashboard build</p>
                             <h3><a href="https://prattsavi.maps.arcgis.com/apps/dashboards/db55b87da2da4d2da30c7716f927ce91">Smithsonian Interactive Dashboard</a></h3>
-                            
-							 <h2>Key Findings</h2>
-                            <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-                            
-                            <h2>Conclusion</h2>
-                            <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-                            
-                            <h2>References</h2>
-                            <ul>
-							 <li> </li>
-							 <li> </li>
-						  </ul>
+      
+      
+    <h2>Understanding the Reach and Representation of Smithsonian Collections</h2>
+    <p>This dashboard isn’t just about visualizing collections, it’s about making public institutions feel more public. It shows how collections are distributed, what kinds of stories are being told (or left out), and who those stories center. It invites users to ask:</p>
+
+    <ul>
+      <li>Which institutions hold the most women-created works?</li>
+      <li>Are certain object types clustered in just one museum?</li>
+      <li>What time periods dominate the collections?</li>
+      <li>Where can I go to see these works in person?</li>
+    </ul>
+
+    <p>It brings discoverability back into the conversation, not just for digital users, but for people trying to plan visits, design lessons, or investigate representation within cultural spaces.</p>
+
+    <h2>Reflections</h2>
+    <p>There’s still more to do. I want to build out filtered dashboards for underrepresented creators, integrate object images directly into the charts, and add more intuitive legends to guide exploration. I also plan to finalize a system for categorizing the over 10,000 unique object types into digestible themes, which would open up even deeper analysis.</p>
+      <p>But even in its current state, this dashboard feels like a step toward transparency, toward making one of the world’s largest museum networks more explorable, understandable, and inviting. Whether you’re a researcher, curator, tourist, or curious kid like I once was, this is a tool to help you find all the pieces in place.</p>
 						  </div>
 					   </section>
 					</section>
@@ -127,8 +172,9 @@
 					<section id="three" class="wrapper style1 fade-up">
 						<div class="inner">
 							<h1 class="major">Self Reflection</h1>
-							 <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							 <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+							 <p>Over the course of the semester, I’ve grown a lot, not just in technical skills, but in how I think about visual storytelling, audience, and purpose. I came into this course excited to build new tools and explore new ways to communicate data, but what I gained was a deeper understanding of what makes a visualization work. Through working sessions, presentations, and critiques/feedback from peers and yourself, I’ve learned how to be more intentional with design choices and more responsive to user needs.</p>
+                            <p>One of the biggest shifts for me was learning to balance clarity with complexity. In earlier projects, I focused on showing as much as possible, but over time (especially through your feedback), I started focusing more on hierarchy, accessibility, and narrative. My “Degrees & Disparities” work is a good example, I revised it multiple times based on feedback to make it more intuitive, readable, and visually impactful. I also pushed myself technically, using tools like Tableau, ArcGIS, and Gephi in ways I hadn’t before. And tried different writing styles to fit the research I was presenting.</p>
+                            <p>I’m especially proud of how my Smithsonian project evolved. It went from a straightforward map to a much more dynamic and layered experience, with pop-ups, filters, and thoughtful design decisions, all informed by yours and user feedback. Overall, I feel like I met the course outcomes and really pushed myself to improve with each project. My final portfolio reflects that growth, and I’ve tried to be responsive, creative, and purposeful throughout. Based on my engagement, progress, and the final work I’m submitting, I would propose an A for my final grade.</p>
 						  </div>
 					</section>
 
